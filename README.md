@@ -60,7 +60,7 @@ We only ever compared two things at a time (like "overtime vs. quitting") becaus
 |---|---|---|
 | Q1 — Stress | Bar chart, stacked bar chart | We just needed one or two percentages per group — bars are the simplest way to show "how tall is this group's number" |
 | Q2 — Money/promotion | Box plot, histogram | Salaries and years-at-company aren't single numbers, they're a big spread of different values per person — these charts show the whole spread, not just one average |
-| Q3 — Who's at risk 
+| Q3 — Who's at risk | Box plot, Heat Map |Same reasoning for age; the heatmap is just a shortcut to scan every other column at once, instead of making 25 separate charts |
 
 ## Analysis techniques used
 
@@ -73,20 +73,6 @@ We only ever compared two things at a time (like "overtime vs. quitting") becaus
 
 **Where AI helped:** an AI assistant (Copilot) was used throughout — to help plan out the 6 hypotheses, to help pick the right chart type for each one, to help turn different units into one shared comparison scale, and to help spot that Hypothesis 4 could fit under a different business question than first assumed.
 
-## Ethical considerations (optional)
-
-* Feel free to delete this section if this is a data visualisation only (unit 1 or 2) project submission.
-* Were there any data privacy, bias or fairness issues with the data?
-* How did you overcome any legal or societal issues?
-
-## Dashboard Design (optional)
-
-* Feel free to delete this section if this is a data visualisation only (unit 1 or 2) project submission.
-* List all dashboard pages and their content, either blocks of information or widgets, like buttons, checkboxes, images, or any other item that your dashboard library supports.
-* Later, during project development, you may revisit your dashboard plan to update a feature (for example, at the beginning of the project, you were confident you would use a given plot to display an insight, but later you used another plot type).
-* How were data insights communicated to technical and non-technical audiences?
-* Explain how the dashboard was designed to communicate complex data insights to different audiences. 
-
 ## Unfixed Bugs
 
 * No real bugs are left unfixed. One early hiccup: an early version of the cleaned data file was missing the `WorkLifeBalance` column entirely, which meant Hypothesis 5's chart couldn't be made. This was caught by checking the column list before building the charts, and fixed by re-saving the cleaned file with that column kept in.
@@ -98,7 +84,7 @@ We only ever compared two things at a time (like "overtime vs. quitting") becaus
 * **Getting stuck on:** comparing hypotheses measured in totally different units (dollars vs. percent vs. years). **Fixed by:** converting every result into "% bigger than the other group," so they could all be ranked on the same scale.
 * **Getting stuck on:** deciding which business question Hypothesis 4 really belonged to. **Fixed by:** just writing down the honest disagreement instead of quietly picking one answer.
 
-## Main Data Analysis Libraries
+## Main Data Analysis Librariesgit
 
 * **pandas** — used for splitting employees into groups and counting/averaging within each group. Example: `df.groupby("OverTime")["Attrition_Encoded"].mean() * 100` gives the % who quit, per overtime group.
 * **matplotlib** and **seaborn** — used for actually drawing the bars, boxes, and lines you see in the charts.
