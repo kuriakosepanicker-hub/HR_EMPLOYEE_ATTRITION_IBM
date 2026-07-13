@@ -99,4 +99,4 @@ Nothing more advanced than that was needed — no complicated statistics formula
 
 ## Acknowledgements (optional)
 
-* - Special Thanks to Vasi, Lori, Niel and Michael (Tutors) and my colleagues for the support.
+* - Special Thanks to Vasi, Lori, Niel and Michael (Tutors) and my colleagues for the support and especially Copilot for guiding me all over wherever i was stuck. especially the codes in the data visualizaion part.
