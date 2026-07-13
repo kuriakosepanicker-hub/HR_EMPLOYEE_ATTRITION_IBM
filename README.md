@@ -1,58 +1,77 @@
 # IBM Attrition Analysis
-
-**IBM Attrition Analysis** is a comprehensive data analysis tool designed to streamline data exploration, analysis, and visualisation. The tool supports multiple data formats and provides an intuitive interface for both novice and expert data scientists.
+**In one sentence:** this project looks at data on 1,470 employees to figure out *why* people quit their jobs, using simple charts instead of complicated math.
 
 # ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 ## Dataset Content
 
-* The information (dataset) comes from a study done by IBM about employee behavior. 
-* **Size:** It has information on **1,470 employees** and tracks **35 different details** about each person (like their age, how much they get paid, and if they work extra hours).
-* **File Type:** It is a simple Excel-style text file called a `.csv`. It is very small, so it loads quickly and easily on GitHub.
-* **What we are tracking:** The most important detail is the **`Attrition`** column, which simply says **"Yes"** if the employee quit their job, or **"No"** if they decided to stay.
+* This data comes from a study IBM did about their own employees.
+* **How big is it?** 1,470 employees, and 35 pieces of information about each one in the original file (32 in the cleaned version we actually work with) — things like age, pay, and whether they work extra hours.
+* **What file is it?** A `.csv` file — basically a big spreadsheet saved as plain text. Small and quick to open.
+* **The most important column:** `Attrition_Encoded`. It's just a **1** if that employee quit, or a **0** if they're still working there. Almost everything in this project is really just asking: *"which other columns tend to be different between the 1s and the 0s?"*
 
 ## Business Requirements
-The Human Resources (HR) department is facing high employee turnover, which is costly, hurts company culture, and slows down productivity. To address this issue, this project is built around three core Business Requirements (BR) that directly map to our 6 research hypotheses:
 
-### Requirement 1: Find out if stress and unhappiness are making people quit
-We need to show the company if everyday work pressure and feeling unhappy are the main reasons people decide to leave.
-*   **How we answer this:**
-    *   **Overtime Guess (Hypothesis 1):** We check if working extra hours tires people out and makes them quit.
-    *   **Job Satisfaction Guess (Hypothesis 3):** We check if simply being unhappy with daily tasks leads to people leaving.
-    *   **Work-Life Balance Guess (Hypothesis 5):** We check if having no time for personal life outside of work forces employees to find a new job.
+The company (HR) is worried too many people are quitting. That costs money and hurts the team. So they asked us to look into 3 big questions:
 
-### Requirement 2: Find out if money and lack of promotions are the problem
-We need to show the company if employees are leaving because they feel underpaid or feel like they are stuck in the same position forever.
-*   **How we answer this:**
-    *   **Monthly Income Guess (Hypothesis 2):** We compare the salaries of those who stayed versus those who left to see if low pay is a major trigger for quitting.
-    *   **Years at Company Guess (Hypothesis 4):** We check if people feel ignored after their first few years on the job and decide to leave.
+### Question 1: Is work too stressful?
+Are people quitting because the job is exhausting or makes them unhappy?
+* We check this using: **Overtime** (Hypothesis 1), **Job Satisfaction** (Hypothesis 3), and **Work-Life Balance** (Hypothesis 5).
 
-### Requirement 3: Find out WHO is most likely to leave
-We need to show HR exactly *which* groups of employees are at the highest risk of quitting so they can focus their attention and budget on helping them.
-*   **How we answer this:**
-    *   **Age Guess (Hypothesis 6):** We check if younger workers (who might want to try different career paths) quit more often than older, more settled workers.
+### Question 2: Is it about money and getting promoted?
+Are people quitting because they feel underpaid, or like they're never going to move up?
+* We check this using: **Monthly Income** (Hypothesis 2) and **Years at the Company** (Hypothesis 4).
+
+### Question 3: Which employees are most likely to quit?
+If HR could only watch out for one type of employee, who should it be?
+* We check this using: **Age** (Hypothesis 6).
 
 
 ## Hypothesis and how to validate?
 
-* List here your project hypothesis(es) and how you envision validating it (them) 
+A "hypothesis" is just a fancy word for **a guess you can check with data.**
+
+| # | Our guess, in plain words | What we looked at | Were we right? |
+|---|---|---|---|
+| H1 | People who work overtime quit more | Bar chart comparing quit-rates | **Yes** — overtime workers quit 3x as often (30.5% vs 10.4%) |
+| H2 | People paid less quit more | Box plot comparing salaries | **Yes** — people who quit earned less ($3,202 vs $5,204 typically) |
+| H3 | Unhappier people quit more | Stacked bar chart | **Yes**, a bit — happier people quit less often, but the gap is smaller than H1 or H2 |
+| H4 | People quit mostly in their first few years | Histogram (a shape chart) | **Yes** — most quitting happens in the first 1-3 years, not later |
+| H5 | People with a bad work-life balance quit more | Bar chart | **Yes** — the worst-balance group quits about 2x as often as everyone else |
+| H6 | Younger people quit more than older people | Box plot comparing ages | **Yes**, a little — younger employees quit somewhat more, but it's the smallest effect of all six |
+
+**In one sentence:** if HR can only fix one or two things, fixing overtime and work-life balance would matter the most.
 
 ## Project Plan
 
-* Outline the high-level steps taken for the analysis.
-* How was the data managed throughout the collection, processing, analysis and interpretation steps?
-* Why did you choose the research methodologies you used?
+1. **Load the data** and just look at it — how many rows, what columns, anything obviously broken?
+2. **Check for problems** — missing values? Duplicate employees? Columns where every single row has the exact same value (which tells us nothing useful, so we can throw them away)?
+3. **Clean it up** — remove the useless columns, and make sure "did they quit" is stored as a simple 1/0 (`Attrition_Encoded`) so it's easy to do math with later. No separate Yes/No text column is kept.
+4. **Save the clean version** — so we don't have to redo the cleaning every time.
+5. **Test each hypothesis one at a time** — for each guess, split people into groups, count what % of each group quit, and draw the simplest chart that shows the difference.
+6. **Rank the guesses and write up what we found**, in plain English, connecting it back to the 3 big business questions.
+
+We only ever compared two things at a time (like "overtime vs. quitting") because that keeps every chart answerable in one sentence. A more advanced approach — checking several things together at once — is listed as a future step rather than attempted here.
+
 
 ## The rationale to map the business requirements to the Data Visualisations
 
-* List your business requirements and a rationale for mapping them to the Data Visualisations
+| Business Question | Charts used | Why this chart made sense |
+|---|---|---|
+| Q1 — Stress | Bar chart, stacked bar chart | We just needed one or two percentages per group — bars are the simplest way to show "how tall is this group's number" |
+| Q2 — Money/promotion | Box plot, histogram | Salaries and years-at-company aren't single numbers, they're a big spread of different values per person — these charts show the whole spread, not just one average |
+| Q3 — Who's at risk 
 
 ## Analysis techniques used
 
-* List the data analysis methods used and explain limitations or alternative approaches.
-* How did you structure the data analysis techniques? Justify your response.
-* Did the data limit you, and did you use an alternative approach to meet these challenges?
-* How did you use generative AI tools to help with ideation, design thinking and code optimisation?
+* **Counting and percentages** — splitting employees into groups (like "overtime" vs. "no overtime") and working out what % of each group quit. No complicated formulas, just counting.
+* **Typical value and spread** — for number-heavy columns like income or age, we looked at the middle value (median) and how spread out the numbers were, using box plots.
+* **A shortcut scan (correlation heatmap)** — instead of checking each of the ~25 number columns one at a time, this one chart checks all of them against quitting in a single glance.
+* **Turning different units into one shared scale** — since "percent," "dollars," and "years" can't be compared directly, every result was converted into "how much bigger, relatively" so all six guesses could be ranked fairly against each other.
+
+**Where this could be wrong (limitations):** this is a snapshot of one company at one point in time — a small dataset (1,470 people) — so what's true here might not be true everywhere. We only ever compared two things at a time; we never checked whether, say, overtime *and* low pay *together* make things even worse — that would need a more advanced technique, and is left as a next step rather than something we tackled here, since this project's scope is visualisation, not building a prediction model. Also, finding that two things happen together (like overtime and quitting) doesn't prove one *causes* the other.
+
+**Where AI helped:** an AI assistant (Copilot) was used throughout — to help plan out the 6 hypotheses, to help pick the right chart type for each one, to help turn different units into one shared comparison scale, and to help spot that Hypothesis 4 could fit under a different business question than first assumed.
 
 ## Ethical considerations (optional)
 
@@ -70,55 +89,28 @@ We need to show HR exactly *which* groups of employees are at the highest risk o
 
 ## Unfixed Bugs
 
-* Please list any unfixed bugs and explain why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a significant variable to consider, paucity of time and difficulty understanding implementation are not valid reasons to leave bugs unfixed.
-* Did you recognise gaps in your knowledge, and how did you address them?
-* If applicable, include evidence of feedback received (from peers or instructors) and how it improved your approach or understanding.
+* No real bugs are left unfixed. One early hiccup: an early version of the cleaned data file was missing the `WorkLifeBalance` column entirely, which meant Hypothesis 5's chart couldn't be made. This was caught by checking the column list before building the charts, and fixed by re-saving the cleaned file with that column kept in.
+* A harmless warning message sometimes appears when relabeling chart tick marks from 0/1 to "No"/"Yes" (a `UserWarning` from the charting library). It doesn't change what the chart looks like, so it was left alone rather than "fixed" for no real benefit.
 
 ## Development Roadmap
 
-* What challenges did you face, and what strategies were used to overcome these challenges?
-* What new skills or tools do you plan to learn next based on your project experience? 
-
-## Deployment (optional)
-
-* If this is a Unit 3 Streamlit, Power BI or Tableau Public project, then you can include a link here and explain how you hosted the dashboard.
-
-### Heroku (optional)
-
-* This section is necessary only if you are deploying a Streamlit app to Heroku as part of your submission for units 2 and 3. 
-* The App live link is: https://YOUR_APP_NAME.herokuapp.com/ 
-* Set the `.python-version` Python version to a [Heroku-22](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack currently supported version.
-* The project was deployed to Heroku using the following steps.
-
-1. Log in to Heroku and create an App
-2. From the Deploy tab, select GitHub as the deployment method.
-3. Select your repository name and click Search. Once it is found, click Connect.
-4. Select the branch you want to deploy, then click Deploy Branch.
-5. The deployment process should happen smoothly if all deployment files are fully functional. Click the button Open App at the top of the page to access your App.
-6. If the slug size is too large, then add large files not required for the app to the `.slugignore` file.
+* **Getting stuck on:** which chart to use for which hypothesis. **Fixed by:** working out one simple rule — percentages get a bar chart, spreads of numbers get a box plot or histogram.
+* **Getting stuck on:** comparing hypotheses measured in totally different units (dollars vs. percent vs. years). **Fixed by:** converting every result into "% bigger than the other group," so they could all be ranked on the same scale.
+* **Getting stuck on:** deciding which business question Hypothesis 4 really belonged to. **Fixed by:** just writing down the honest disagreement instead of quietly picking one answer.
 
 ## Main Data Analysis Libraries
 
-* Here you should list the libraries you used in the project and provide an example(s) of how you used these libraries.
+* **pandas** — used for splitting employees into groups and counting/averaging within each group. Example: `df.groupby("OverTime")["Attrition_Encoded"].mean() * 100` gives the % who quit, per overtime group.
+* **matplotlib** and **seaborn** — used for actually drawing the bars, boxes, and lines you see in the charts.
 
-## Credits
-
-* In this section, you need to reference where you got your content, media and extra help from. It is common practice to use code from other repositories and tutorials; however, it is important to be very specific about these sources to avoid plagiarism. 
-* You can break the credits section into Content and Media, depending on what you include in your project. 
+Nothing more advanced than that was needed — no complicated statistics formulas, just counting, percentages, and pictures.
 
 ### Content 
 
-- The text for the Home page was taken from the Wikipedia Article A
-- Instructions on how to implement form validation were taken from a [Specific YouTube Tutorial](https://www.youtube.com/)
-- The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
-
-### Media
-
-- The photos used on the home and sign-up page are from This Open-Source site
-- The images used for the gallery page were taken from this other open-source site
-
-
+- The business questions and hypotheses were adapted from the Code Institute assessment brief.
+- This README follows the structure of the [Code Institute da-README-template](https://github.com/Code-Institute-Solutions/da-README-template).
+- Dataset: IBM HR Analytics Employee Attrition & Performance dataset (publicly available, e.g. on Kaggle).
 
 ## Acknowledgements (optional)
 
-* Thank the people who supported this project.
+* - Special Thanks to Vasi, Lori, Niel and Michael (Tutors) and my colleagues for the support.
